@@ -28,3 +28,4 @@ app.log
 
 /venv/
 __pycache__/
+apps.json
