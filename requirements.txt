@@ -1,0 +1,7 @@
+board
+adafruit-circuitpython-dht
+adafruit-blinka
+lgpio
+gpiozero
+Flask
+flask-cors

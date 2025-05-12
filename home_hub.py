@@ -1,0 +1,15 @@
+import adafruit_dht
+import board
+from gpiozero import RGBLED
+
+class HomeHub:
+    def __init__(self):
+        self.devices = {
+            "dht11": adafruit_dht.DHT11(board.D4),
+            "rgb": RGBLED(red=16, green=20, blue=21, active_high=False, pwm=True)
+        }
+
+    def get_device(self, label):
+        return self.devices[label]
+
+
