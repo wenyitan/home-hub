@@ -6,8 +6,8 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Home Hub</h1>
-        <p className="subtext">Minimalistic Control Center</p>
+        <h1>Wen Tian Home Hub</h1>
+        <p className="subtext">Control Center</p>
       </header>
       <main className="App-body">
         <section className="instructions">
