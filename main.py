@@ -26,7 +26,7 @@ def set_rgb_led():
     red = float(request.args.get("red", 0))
     blue = float(request.args.get("blue", 0))
     led = hub.get_device("rgb")
-    led.color = (red/4,green/4,blue/4)
+    led.color = (red/3,green/3,blue/3)
     return {"red": red, "green": green, "blue": blue}
 
 if __name__ == "__main__":
