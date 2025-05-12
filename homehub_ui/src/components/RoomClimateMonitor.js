@@ -9,8 +9,8 @@ function RoomClimateMonitor() {
     const fetchTemperatureAndHumidity = () => {
         axios.get("http://raspberrypi.local:5001/api/v1/home-hub/dht11-reading")
         .then((res)=> {
-            setHumidity(res.data.humidity);
-            setTemperature(res.data.temperature);
+            setHumidity(res.data.humidity + "%");
+            setTemperature(res.data.temperature + "\u00B0C");
         })
         .catch((err)=> {
             setHumidity("err");
@@ -26,8 +26,8 @@ function RoomClimateMonitor() {
         <>
             <h3>Room Monitor</h3>
             <div className='widget'>
-                <h5>Humidity: <span className="value">{humidity}%</span></h5>
-                <h5>Temperature: <span className="value">{temperature}{'\u00B0'}C</span></h5>
+                <h5>Humidity: <span className="value">{humidity}</span></h5>
+                <h5>Temperature: <span className="value">{temperature}</span></h5>
                 <button className='outlined' onClick={fetchTemperatureAndHumidity}>Refresh</button>
             </div>
         
