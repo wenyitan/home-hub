@@ -1,6 +1,7 @@
 import './App.css';
 import RGBLed from './components/RGBLed';
 import RoomClimateMonitor from './components/RoomClimateMonitor';
+import HumidifierControl from './components/HumidifierControl';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <p><strong>How to use:</strong><br />To use on phone, access <code>http://192.168.18.52:3000</code></p>
         </section>
         <RoomClimateMonitor />
+        <HumidifierControl />
         <RGBLed />
       </main>
     </div>

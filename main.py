@@ -4,10 +4,17 @@ from flask_cors import CORS
 from pathlib import Path
 import json
 import subprocess
+from enum import Enum
 
 app = Flask(__name__)
 CORS(app)
 hub = HomeHub()
+
+class OperationMode(Enum):
+    Low = 1
+    Medium = 2
+    High = 3
+    Auto = 4
 
 @app.get("/api/v1/home-hub/dht11-reading")
 def get_humidity_and_temp():
@@ -117,6 +124,22 @@ def work_humidifier(resource):
                 return {"error": "method not supported", "status_code": 400}, 400
     else:
         return {"error": "method not supported", "status_code": 400}, 400
+
+@app.get("/api/v1/home-hub/humidifier/toggle-mode")
+def toggle_humidifier_mode():
+    humidifier = hub.get_device("humidifier")
+    status = humidifier.status().data
+    power = status["power"]
+    mode = status["mode"]
+    if mode == 4:
+        to_set = 1
+    else:
+        to_set = mode + 1
+    if power:
+        humidifier.set_mode(OperationMode(to_set))
+        return {"message": f"success, mode set to {to_set}"}
+    else:
+        return {"message": f"Nothing was changed as the power is off"}
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5001)
