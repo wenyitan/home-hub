@@ -8,13 +8,18 @@ function RGBLed() {
 
     const setColor = () => {
         const colorBox = document.getElementById("color-box");
-        colorBox.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
         axios.get("http://raspberrypi.local:5001/api/v1/home-hub/rgbled", {
             params: {
                 red: red/256,
                 green: green/256,
                 blue: blue/256
             }
+        }).then((res)=> {
+            const data = res.data;
+            colorBox.style.backgroundColor = `rgb(${data["red"]*256}, ${data["green"]*256}, ${data["blue"]*256})`;
+        }).catch((err)=> {
+            colorBox.style.backgroundColor = `rgb(0,0,0)`;
+            console.log(err);
         })
     }
 
