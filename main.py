@@ -104,7 +104,6 @@ def work_humidifier(resource):
     if status["led_light"]:
         humidifier.set_light(False)
     
-    # print(dir(humidifier))
     if resource in dir(humidifier):
         if resource in ["on", "off"]:
             getattr(humidifier, resource)()
