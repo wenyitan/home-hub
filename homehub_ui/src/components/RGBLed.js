@@ -43,7 +43,7 @@ function RGBLed() {
                 Green<input type='range' className="green" value={green} onChange={(e)=>setGreen(e.target.value)} min="0" max="256"/>
             </div>
             <div className='flex-row'>
-            <button onClick={(e) => {
+            <button className="contained" onClick={(e) => {
                 setBlue(0);
                 setGreen(0);
                 setRed(0)

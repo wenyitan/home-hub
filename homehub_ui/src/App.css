@@ -140,7 +140,7 @@ input[type=range]:focus::-webkit-slider-runnable-track {
     background: #ccc;
 }
 
-button {
+.contained {
   background-color: #007BFF;
   color: white;
   border: 1px solid #007BFF;
@@ -152,7 +152,7 @@ button {
   transition: background-color 0.2s ease-in-out;
 }
 
-button:hover {
+.contained:hover {
   background-color: white;
   color: #007BFF;
   border: 1px solid #007BFF;
@@ -181,4 +181,14 @@ button:active {
 
 .outlined:active {
   transform: scale(0.95); /* Slight shrink effect */
+}
+
+.no-outline {
+  background-color: white;
+  color: #007BFF;
+  border: 0px ;
+  padding: 8px 4px;
+  cursor: pointer;
+  font-size: 2rem;
+  font-weight: bold;
 }
