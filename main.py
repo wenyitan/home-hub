@@ -15,6 +15,10 @@ def get_humidity_and_temp():
     try:
         humidity = round(humidity_sensor.humidity, 1)
         temperature = humidity_sensor.temperature
+        if humidity > 70:
+            work_humidifier("off")
+        elif humidity < 40:
+            work_humidifier("on")
         return {
             "humidity": humidity,
             "temperature": temperature
@@ -90,6 +94,30 @@ def get_app_health():
             continue
 
     return result
+
+@app.get("/api/v1/home-hub/humidifier/<resource>") ## get_properties_for_mapping gives piid and siid
+def work_humidifier(resource):
+    humidifier = hub.get_device("humidifier")
+    status = humidifier.status().data
+    if status["buzzer"]:
+        humidifier.set_buzzer(False)
+    if status["led_light"]:
+        humidifier.set_light(False)
+    
+    # print(dir(humidifier))
+    if resource in dir(humidifier):
+        if resource in ["on", "off"]:
+            getattr(humidifier, resource)()
+            return "Success"
+        elif resource == "status":
+            return status
+        else:
+            try:
+                return getattr(humidifier, resource)().__dict__
+            except TypeError:
+                return {"error": "method not supported", "status_code": 400}, 400
+    else:
+        return {"error": "method not supported", "status_code": 400}, 400
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5001)

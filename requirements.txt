@@ -5,3 +5,4 @@ lgpio
 gpiozero
 Flask
 flask-cors
+python-miio
