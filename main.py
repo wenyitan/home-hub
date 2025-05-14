@@ -5,6 +5,10 @@ from pathlib import Path
 import json
 import subprocess
 from enum import Enum
+from apscheduler.schedulers.background import BackgroundScheduler
+import datetime
+from logging_config import logger
+
 
 app = Flask(__name__)
 CORS(app)
@@ -106,15 +110,21 @@ def get_app_health():
 def work_humidifier(resource):
     humidifier = hub.get_device("humidifier")
     status = humidifier.status().data
-    if status["buzzer"]:
-        humidifier.set_buzzer(False)
-    if status["led_light"]:
-        humidifier.set_light(False)
     
     if resource in dir(humidifier):
         if resource in ["on", "off"]:
-            getattr(humidifier, resource)()
-            return "Success"
+            if status["buzzer"]:
+                humidifier.set_buzzer(False)
+            if status["led_light"]:
+                humidifier.set_light(False)
+            power = status["power"]
+            if (power and resource == "off") or (not power and resource =="on"):
+                getattr(humidifier, resource)()
+                now = datetime.datetime.now()
+                logger.info(f"Humidifier powered {resource} at {now}.")
+                return "Success"
+            else:
+                return f"Nothing was done as the power is already {resource}."
         elif resource == "status":
             return status
         else:
@@ -142,4 +152,7 @@ def toggle_humidifier_mode():
         return {"message": f"Nothing was changed as the power is off"}
 
 if __name__ == "__main__":
+    scheduler = BackgroundScheduler()
+    scheduler.add_job(get_humidity_and_temp, "cron", minute="*/30", misfire_grace_time=60)
+    scheduler.start()
     app.run(host="0.0.0.0", port=5001)
