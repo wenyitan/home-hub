@@ -28,7 +28,7 @@ def get_humidity_and_temp():
         temperature = humidity_sensor.temperature
         if humidity > 70:
             work_humidifier("off")
-        elif humidity < 40:
+        elif humidity < 50:
             work_humidifier("on")
         return {
             "humidity": humidity,
@@ -153,6 +153,6 @@ def toggle_humidifier_mode():
 
 if __name__ == "__main__":
     scheduler = BackgroundScheduler()
-    scheduler.add_job(get_humidity_and_temp, "cron", minute="*/30", misfire_grace_time=60)
+    scheduler.add_job(get_humidity_and_temp, "cron", hour="0-8,20-23", misfire_grace_time=60)
     scheduler.start()
     app.run(host="0.0.0.0", port=5001)
