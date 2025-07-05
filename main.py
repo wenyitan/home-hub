@@ -8,7 +8,7 @@ from enum import Enum
 from apscheduler.schedulers.background import BackgroundScheduler
 import datetime
 from logging_config import logger
-
+from device_monitoring import get_all_metrics
 
 app = Flask(__name__)
 CORS(app)
@@ -26,6 +26,7 @@ def get_humidity_and_temp():
     try:
         humidity = round(humidity_sensor.humidity, 1)
         temperature = humidity_sensor.temperature
+        logger.info(f"Humidity: {humidity}%. Temperature: {temperature}C")
         if humidity > 70:
             work_humidifier("off")
         elif humidity < 50:
@@ -126,6 +127,7 @@ def work_humidifier(resource):
             else:
                 return f"Nothing was done as the power is already {resource}."
         elif resource == "status":
+            logger.info(f"Humidifier status: {status}")
             return status
         else:
             try:
@@ -150,6 +152,13 @@ def toggle_humidifier_mode():
         return {"message": f"success, mode set to {to_set}"}
     else:
         return {"message": f"Nothing was changed as the power is off"}
+
+@app.get("/api/v1/home-hub/raspberrypi/status") ## get_properties_for_mapping gives piid and siid
+def get_raspberry_status():
+    try:
+        return get_all_metrics()
+    except Exception as e:
+        return {"error": e}
 
 if __name__ == "__main__":
     scheduler = BackgroundScheduler()

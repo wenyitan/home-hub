@@ -7,3 +7,4 @@ Flask
 flask-cors
 python-miio
 apscheduler
+psutil

@@ -33,6 +33,9 @@ body {
   max-width: 500px;
   margin: 0 auto;
   padding: 20px 0;
+  /* display: flex;
+  flex-direction: column;
+  align-items: center; */
 }
 
 /* Instructions section */
@@ -62,6 +65,35 @@ body {
   font-size: 2.2rem;
   color: #007BFF;
   font-weight: bold;
+}
+
+/* Scoped CSS for RaspberryMonitor internal widgets */
+.rpi-widgets-grid {
+  display: flex;
+  flex-wrap: wrap;          /* allow widgets to wrap to next line */
+  justify-content: space-between; /* spread out evenly */
+  gap: 16px;                /* space between widgets */
+  width: 150%;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.rpi-widget {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  border: 3px solid #007BFF;
+  flex: 1 1 250px;          /* grow=1, shrink=1, base width=220px */
+  /* width: 50%; */
+  box-sizing: border-box; 
+}
+
+.rpi-widget h5 {
+  margin: 10px 0;
+  font-size: 1rem;
 }
 
 /* Color box */

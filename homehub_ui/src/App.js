@@ -2,6 +2,7 @@ import './App.css';
 import RGBLed from './components/RGBLed';
 import RoomClimateMonitor from './components/RoomClimateMonitor';
 import HumidifierControl from './components/HumidifierControl';
+import RaspberryMonitor from './components/RaspberryMonitor';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         </section>
         <RoomClimateMonitor />
         <HumidifierControl />
+        <RaspberryMonitor />
         <RGBLed />
       </main>
     </div>
