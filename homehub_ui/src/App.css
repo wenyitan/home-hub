@@ -224,3 +224,37 @@ button:active {
   font-size: 2rem;
   font-weight: bold;
 }
+
+.polling-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  margin-bottom: 16px;
+  justify-content: center;
+  user-select: none;
+}
+
+.indicator-light {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid #444;
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.indicator-light.on {
+  background-color: #4CAF50;
+  box-shadow: 0 0 6px #4CAF50;
+}
+
+.indicator-light.off {
+  background-color: #aaa;
+  box-shadow: none;
+}
+
+.indicator-label {
+  font-size: 0.9rem;
+  color: #555;
+}
